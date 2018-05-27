@@ -18,13 +18,15 @@ import retrofit2.Response;
 public class PlacesRepository {
     private WikipediaService service;
 
+    private static final String gpsLocation = "10.7712404|106.6978887";
+
     public PlacesRepository(WikipediaService service) {
         this.service = service;
     }
 
     public LiveData<List<WikipediaPage>> getPlacesList() {
         final MutableLiveData<List<WikipediaPage>> liveData = new MutableLiveData<>();
-        service.getPlaces().enqueue(new Callback<WikipediaResponse>() {
+        service.getPlaces(gpsLocation).enqueue(new Callback<WikipediaResponse>() {
             @Override
             public void onResponse(Call<WikipediaResponse> call, Response<WikipediaResponse> response) {
                 if (response != null

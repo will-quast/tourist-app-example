@@ -12,7 +12,7 @@ import retrofit2.mock.Calls;
 public class MockWikipediaService implements WikipediaService {
 
     @Override
-    public Call<WikipediaResponse> getPlaces() {
+    public Call<WikipediaResponse> getPlaces(String gpsCoord) {
 
         // create some mock data to test with
         WikipediaResponse wikipediaResponse = new WikipediaResponse();

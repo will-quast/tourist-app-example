@@ -6,13 +6,15 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.corelambda.touristapp.model.WikipediaPage;
+
 import java.util.List;
 
 public class TouristRecyclerAdapter extends RecyclerView.Adapter<TouristRecyclerAdapter.TouristViewHolder> {
 
-    private List<String> items;
+    private List<WikipediaPage> items;
 
-    public TouristRecyclerAdapter (List<String> items) {
+    public TouristRecyclerAdapter (List<WikipediaPage> items) {
         this.items = items;
     }
 
@@ -43,8 +45,8 @@ public class TouristRecyclerAdapter extends RecyclerView.Adapter<TouristRecycler
             this.textView = textView;
         }
 
-        private void bindView(String itemText) {
-            textView.setText(itemText);
+        private void bindView(WikipediaPage page) {
+            textView.setText(page.getTitle());
         }
     }
 }

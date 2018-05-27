@@ -8,7 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.corelambda.touristapp.model.WikipediaPage;
+
 import java.util.List;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,14 +29,27 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        
-        placesViewModel = ViewModelProviders.of(this).get(PlacesViewModel.class);
-        placesViewModel.getPlacesList().observe(this, new Observer<List<String>>() {
+
+        placesViewModel = ViewModelProviders.of(this, createViewModelFactory()).get(PlacesViewModel.class);
+        placesViewModel.getPlacesList().observe(this, new Observer<List<WikipediaPage>>() {
             @Override
-            public void onChanged(@Nullable List<String> places) {
+            public void onChanged(@Nullable List<WikipediaPage> places) {
                 recyclerAdapter = new TouristRecyclerAdapter(places);
                 recyclerView.setAdapter(recyclerAdapter);
             }
         });
+    }
+
+    private PlacesViewModel.PlacesViewModelFactory createViewModelFactory() {
+
+        // gather all the dependencies for the PlacesViewModelFactory
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("https://en.wikipedia.org")
+                .build();
+        PlacesRepository placesRepository = new PlacesRepository(retrofit.create(WikipediaService.class));
+
+        // return a factory that can create PlacesViewModels on demand
+        return new PlacesViewModel.PlacesViewModelFactory(placesRepository);
     }
 }

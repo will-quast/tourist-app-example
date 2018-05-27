@@ -8,6 +8,8 @@ import com.corelambda.touristapp.model.WikipediaPage;
 import com.corelambda.touristapp.model.WikipediaResponse;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +37,15 @@ public class PlacesRepository {
                         && response.body().getQuery().getPages() != null) {
                     Map<Integer, WikipediaPage> pagesMap = response.body().getQuery().getPages();
                     List<WikipediaPage> pages = new ArrayList<>(pagesMap.values());
+
+                    // sort the list based on index
+                    Collections.sort(pages, new Comparator<WikipediaPage>() {
+                        @Override
+                        public int compare(WikipediaPage lhs, WikipediaPage rhs) {
+                            return lhs.getIndex() - rhs.getIndex();
+                        }
+                    });
+
                     liveData.postValue(pages);
                 } else {
                     Log.e("PlacesViewModel", "Response has a null value");

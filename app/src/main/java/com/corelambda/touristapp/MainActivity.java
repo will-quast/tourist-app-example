@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.corelambda.touristapp.model.WikipediaPage;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         placesViewModel.getPlacesList().observe(this, new Observer<List<WikipediaPage>>() {
             @Override
             public void onChanged(@Nullable List<WikipediaPage> places) {
-                recyclerAdapter = new TouristRecyclerAdapter(places);
+                recyclerAdapter = new TouristRecyclerAdapter(places, Glide.with(MainActivity.this));
                 recyclerView.setAdapter(recyclerAdapter);
             }
         });

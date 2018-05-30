@@ -4,6 +4,9 @@ This source is intended to be used as course material for the Professional Andro
 
 ## Links
 
+### Current Project State
+https://github.com/krispena/tourist-app
+
 ### Presentation Slides
 https://docs.google.com/presentation/d/1xQHhdsY8mHS8zKYb6uQgOWxiLaIl672Cai-IfRYbjXA/
 
